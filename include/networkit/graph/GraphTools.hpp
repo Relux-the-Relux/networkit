@@ -186,6 +186,19 @@ Graph copyNodes(const Graph &G);
 /**
  * Returns an induced subgraph of this graph (including potential edge weights/directions)
  *
+ * The subgraph contains all nodes in Nodes and all edges which have one end point
+ * in Nodes and the other in Nodes.
+ *
+ * @param G The input graph.
+ * @param nodes Nodes of the induced subgraph.
+ *
+ * @return Induced subgraph.
+ */
+Graph subgraphFromNodes(const Graph &G, const std::unordered_set<node> &nodes);
+
+/**
+ * Returns an induced subgraph of this graph (including potential edge weights/directions)
+ *
  * There a two relevant sets of nodes:
  *  - Nodes are such passed as arguments.
  *  - Neighbors are empty by default.
@@ -201,8 +214,10 @@ Graph copyNodes(const Graph &G);
  *
  * @return Induced subgraph.
  */
-Graph subgraphFromNodes(const Graph &G, const std::unordered_set<node> &nodes,
-                        bool includeOutNeighbors = false, bool includeInNeighbors = false);
+Graph subgraphFromNodesAndEdgesToTheirNeighbors(const Graph &G,
+                                                const std::unordered_set<node> &nodes,
+                                                bool includeOutNeighbors = false,
+                                                bool includeInNeighbors = false);
 
 /**
  * Returns an undirected copy of the input graph.

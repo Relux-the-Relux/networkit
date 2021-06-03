@@ -400,14 +400,37 @@ cdef class GraphTools:
 	def subgraphFromNodes(Graph graph, nodes, includeOutNeighbors=False, includeInNeighbors=False):
 		"""
 		Returns an induced subgraph of this graph (including potential edge
-        weights/directions)
+		weights/directions)
 
-        There a two relevant sets of nodes:
-           - Nodes are such passed as arguments.
-           - Neighbors are empty by default.
+		The subgraph contains all nodes in Nodes  and all edges which
+		have one end point in Nodes and the other in Nodes.
 
-        The subgraph contains all nodes in Nodes + Neighbors and all edges which
-        have one end point in Nodes and the other in Nodes or Neighbors.
+		Parameters:
+		-----------
+		graph : networkit.Graph
+			The input graph.
+		nodes : set
+			Nodes in the induced subgraph.
+		Returns:
+		--------
+		graph : networkit.Graph
+			Induced subgraph.
+		"""
+		return Graph().setThis(subgraphFromNodes(
+			graph._this, nodes, includeOutNeighbors, includeInNeighbors))
+
+		@staticmethod
+	def subgraphFromNodesAndEdgesToTheirNeighbors(Graph graph, nodes, includeOutNeighbors=False, includeInNeighbors=False):
+		"""
+		Returns an induced subgraph of this graph (including potential edge
+		weights/directions)
+
+		There a two relevant sets of nodes:
+			- Nodes are such passed as arguments.
+			- Neighbors are empty by default.
+
+		The subgraph contains all nodes in Nodes + Neighbors and all edges which
+		have one end point in Nodes and the other in Nodes or Neighbors.
 
 		Parameters:
 		-----------
