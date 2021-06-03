@@ -33,7 +33,8 @@ cdef extern from "<networkit/graph/GraphTools.hpp>" namespace "NetworKit::GraphT
 	_Graph toUndirected(_Graph G) nogil except +
 	_Graph toUnweighted(_Graph G) nogil except +
 	_Graph toWeighted(_Graph G) nogil except +
-	_Graph subgraphFromNodes(_Graph G, unordered_set[node], bool_t, bool_t) nogil except +
+	_Graph subgraphFromNodes(_Graph G, unordered_set[node]) nogil except +
+	_Graph subgraphFromNodesAndEdgesToTheirNeighbors(_Graph G, unordered_set[node], bool_t, bool_t) nogil except +
 	void append(_Graph G, _Graph G1) nogil except +
 	void merge(_Graph G, _Graph G1) nogil except +
 	void removeEdgesFromIsolatedSet[InputIt](_Graph G, InputIt first, InputIt last) except +
@@ -397,7 +398,7 @@ cdef class GraphTools:
 		return Graph().setThis(copyNodes(graph._this))
 
 	@staticmethod
-	def subgraphFromNodes(Graph graph, nodes, includeOutNeighbors=False, includeInNeighbors=False):
+	def subgraphFromNodes(Graph graph, nodes):
 		"""
 		Returns an induced subgraph of this graph (including potential edge
 		weights/directions)
@@ -417,7 +418,7 @@ cdef class GraphTools:
 			Induced subgraph.
 		"""
 		return Graph().setThis(subgraphFromNodes(
-			graph._this, nodes, includeOutNeighbors, includeInNeighbors))
+			graph._this, nodes))
 
 		@staticmethod
 	def subgraphFromNodesAndEdgesToTheirNeighbors(Graph graph, nodes, includeOutNeighbors=False, includeInNeighbors=False):
@@ -448,7 +449,7 @@ cdef class GraphTools:
 		graph : networkit.Graph
 			Induced subgraph.
 		"""
-		return Graph().setThis(subgraphFromNodes(
+		return Graph().setThis(subgraphFromNodesAndEdgesToTheirNeighbors(
 			graph._this, nodes, includeOutNeighbors, includeInNeighbors))
 
 	@staticmethod
