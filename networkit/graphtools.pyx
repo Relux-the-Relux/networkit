@@ -420,7 +420,7 @@ cdef class GraphTools:
 		return Graph().setThis(subgraphFromNodes(
 			graph._this, nodes))
 
-		@staticmethod
+	@staticmethod
 	def subgraphFromNodesAndEdgesToTheirNeighbors(Graph graph, nodes, includeOutNeighbors=False, includeInNeighbors=False):
 		"""
 		Returns an induced subgraph of this graph (including potential edge
